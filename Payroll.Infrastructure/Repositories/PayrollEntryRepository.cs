@@ -2,22 +2,21 @@ using Payroll.Application.Interfaces.IRepository;
 
 namespace Payroll.Infrastructure.Repositories
 {
-    public class DeductionRepository : IDeductionRepository
+    public class PayrollEntryRepository : IPayrollEntryRepository
     {
-        public Task AddAsync(Deduction entity)
+        public Task AddAsync(PayrollEntry entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Deduction>> GetByEmployeeIdAsync(Guid employeeId)
+        public Task<IEnumerable<PayrollEntry>> GetByEmployeeIdAsync(Guid employeeId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Deduction?> GetByIdAsync(Guid id)
+        public Task<PayrollEntry?> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
     }
-
 }

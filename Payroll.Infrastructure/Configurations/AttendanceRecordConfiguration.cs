@@ -16,7 +16,7 @@ namespace Payroll.Infrastructure.Configurations
             builder.Property(ar => ar.HoursWorked).HasColumnType("decimal(5,2)").IsRequired(); 
             builder.Property(ar => ar.OvertimeHours).HasColumnType("decimal(5,2)").IsRequired().HasDefaultValue(0);
 
-            //Relationship: One employe has many AttendanceRecords
+            //Relationship: One employee has many AttendanceRecords
             builder.HasOne(ar => ar.Employee)
                 .WithMany(e => e.AttendanceRecords)
                 .HasForeignKey(ar => ar.EmployeeId)
