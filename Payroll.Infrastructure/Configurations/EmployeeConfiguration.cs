@@ -12,12 +12,16 @@ namespace Payroll.Infrastructure.Configurations
             builder.HasKey(e => e.Id);
 
             //Properties
-            builder.Property(e => e.EmployeeCode)
-                   .HasMaxLength(50)
-                   .IsRequired()
-                   .HasMaxLength(20);
+            //builder.Property(e => e.EmployeeCode)
+            //       .HasMaxLength(50)
+            //       .IsRequired()
+            //       .HasMaxLength(20);
 
             builder.Property(e => e.FirstName)
+                   .IsRequired()
+                   .HasMaxLength(50);
+
+            builder.Property(e => e.Email)
                    .IsRequired()
                    .HasMaxLength(50);
 
@@ -25,9 +29,9 @@ namespace Payroll.Infrastructure.Configurations
                    .IsRequired()
                    .HasMaxLength(50);
 
-            builder.Property(e => e.SalaryType)
-                   .HasConversion<string>()
-                   .IsRequired();
+            //builder.Property(e => e.SalaryType)
+            //       .HasConversion<string>()
+            //       .IsRequired();
 
             builder.Property(e => e.BaseSalary)
                    .HasColumnType("decimal(18,2)")
@@ -37,15 +41,15 @@ namespace Payroll.Infrastructure.Configurations
                    .HasMaxLength(10)
                    .IsRequired(false);
 
-            builder.Property(e => e.IsActive)
-                   .HasMaxLength(50)
-                   .IsRequired(true);
+            //builder.Property(e => e.IsActive)
+            //       .HasMaxLength(50)
+            //       .IsRequired(true);
 
             builder.Property(e => e.CreatedAt)
                    .IsRequired()
                    .HasDefaultValueSql("GETUTCDATE()");
 
-            builder.HasIndex(e => e.EmployeeCode).IsUnique();
+            //builder.HasIndex(e => e.EmployeeCode).IsUnique();
 
             //Relationships
             //builder.HasMany(e => e.AttendanceRecords)

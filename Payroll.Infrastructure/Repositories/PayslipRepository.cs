@@ -1,42 +1,60 @@
-﻿using Payroll.Application.Interfaces.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Payroll.Application.Interfaces.IRepository;
+using Payroll.Infrastructure.Data;
 
 namespace Payroll.Infrastructure.Repositories
 {
     public class PayslipRepository : IPayslipRepository
     {
-        public Task AddAsync(PayrollRun entity)
+        private readonly PayrollDbContext _context;
+
+        public PayslipRepository(PayrollDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task AddAsync(Payslip entity)
         {
-            throw new NotImplementedException();
+            await _context.Payslips.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<PayrollRun>> GetAllAsync()
+        public async Task<IEnumerable<Payslip>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Payslips
+                .Include(p => p.Employee)
+                .Include(p => p.PayrollEntry)
+                .ToListAsync();
         }
 
-        public Task<PayrollRun?> GetByIdAsync(Guid id)
+        public async Task<Payslip?> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Payslips
+                .Include(p => p.Employee)
+                .Include(p => p.PayrollEntry)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public Task<PayrollRun?> GetByMonthYearAsync(int month, int year)
+        public async Task<Payslip?> GetByMonthYearAsync(int month, int year)
         {
-            throw new NotImplementedException();
+            return await _context.Payslips
+                .Include(p => p.Employee)
+                .Include(p => p.PayrollEntry)
+                .ThenInclude(pe => pe!.PayrollRun)
+                .FirstOrDefaultAsync(p =>
+                    p.PayrollEntry!.PayrollRun!.Month == month &&
+                    p.PayrollEntry.PayrollRun.Year == year
+                );
         }
 
-        public Task<IEnumerable<PayrollRun>> GetByYearAsync(int year)
+        public async Task<IEnumerable<Payslip>> GetByYearAsync(int year)
         {
-            throw new NotImplementedException();
+            return await _context.Payslips
+                .Include(p => p.Employee)
+                .Include(p => p.PayrollEntry)
+                .ThenInclude(pe => pe!.PayrollRun)
+                .Where(p => p.PayrollEntry!.PayrollRun!.Year == year)
+                .ToListAsync();
         }
     }
 }

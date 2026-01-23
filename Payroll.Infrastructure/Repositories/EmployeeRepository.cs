@@ -1,22 +1,29 @@
+using Microsoft.EntityFrameworkCore;
 using Payroll.Application.Interfaces.IRepository;
+using Payroll.Infrastructure.Data;
 
-namespace Payroll.Infrastructure.Repositories
+public class EmployeeRepository : IEmployeeRepository
 {
-    public class EmployeeRepository : IEmployeeRepository
+    private readonly PayrollDbContext _context;
+
+    public EmployeeRepository(PayrollDbContext context)
     {
-        public Task AddAsync(Employee entity)
-        {
-            throw new NotImplementedException();
-        }
+        _context = context;
+    }
 
-        public Task<IEnumerable<Employee>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
+    public async Task<Employee?> GetByIdAsync(Guid id)
+    {
+        return await _context.Employees.FindAsync(id);
+    }
 
-        public Task<Employee?> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+    public async Task<IEnumerable<Employee>> GetAllAsync()
+    {
+        return await _context.Employees.ToListAsync();
+    }
+
+    public async Task AddAsync(Employee entity)
+    {
+        await _context.Employees.AddAsync(entity);
+        await _context.SaveChangesAsync();
     }
 }

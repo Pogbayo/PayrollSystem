@@ -1,23 +1,38 @@
-﻿using Payroll.Application.Interfaces.IRepository;
-
+﻿using Microsoft.EntityFrameworkCore;
+using Payroll.Application.Interfaces.IRepository;
+using Payroll.Infrastructure.Data;
 
 namespace Payroll.Infrastructure.Repositories
 {
     public class PayrollRunRepository : IPayrollRunRepository
     {
-        public Task AddAsync(PayrollRun entity)
+        private readonly PayrollDbContext _context;
+
+        public PayrollRunRepository(PayrollDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<IEnumerable<PayrollRun>> GetAllAsync()
+        public async Task AddAsync(PayrollRun entity)
         {
-            throw new NotImplementedException();
+            await _context.PayrollRuns.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<PayrollRun?> GetByMonthYearAsync(int month, int year)
+        public async Task<IEnumerable<PayrollRun>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.PayrollRuns
+                .Include(pr => pr.PayrollEntries)
+                .OrderByDescending(pr => pr.Year)
+                .ThenByDescending(pr => pr.Month)
+                .ToListAsync();
+        }
+
+        public async Task<PayrollRun?> GetByMonthYearAsync(int month, int year)
+        {
+            return await _context.PayrollRuns
+                .Include(pr => pr.PayrollEntries)
+                .FirstOrDefaultAsync(pr => pr.Month == month && pr.Year == year);
         }
     }
 }
