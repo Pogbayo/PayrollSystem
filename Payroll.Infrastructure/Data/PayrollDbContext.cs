@@ -11,8 +11,8 @@ namespace Payroll.Infrastructure.Data
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<SalaryStructure> SalaryStructures { get; set; }
-        public DbSet<Deduction> Deductions { get; set; }
-        public DbSet<AttendanceRecord> AttendanceRecords { get; set; }
+        //public DbSet<Deduction> Deductions { get; set; }
+        //public DbSet<AttendanceRecord> AttendanceRecords { get; set; }
         public DbSet<PayrollRun> PayrollRuns { get; set; }
         public DbSet<PayrollEntry> PayrollEntries { get; set; }
         public DbSet<Payslip> Payslips { get; set; }

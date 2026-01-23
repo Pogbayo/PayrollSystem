@@ -11,7 +11,7 @@ namespace Payroll.Application.Interfaces.IService
         Task<PayrollEntry?> GetByIdAsync(Guid id);
         Task<IEnumerable<PayrollEntry>> GetByEmployeeIdAsync(Guid employeeId);
         Task<Guid> AddAsync(PayrollEntry entity);
-        Task<decimal> CalculateNetPayAsync(Guid employeeId);  // Gross - deductions
-        Task<bool> ProcessAutopaymentAsync(Guid payrollEntryId)
+        Task<decimal> CalculateNetPayAsync(Guid employeeId); 
+        Task<bool> ProcessAutopaymentAsync(Guid payrollEntryId);
     }
 }

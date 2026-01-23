@@ -48,15 +48,15 @@ namespace Payroll.Infrastructure.Configurations
             builder.HasIndex(e => e.EmployeeCode).IsUnique();
 
             //Relationships
-            builder.HasMany(e => e.AttendanceRecords)
-                   .WithOne(ar => ar.Employee)
-                   .HasForeignKey(ar => ar.EmployeeId)
-                   .OnDelete(DeleteBehavior.Restrict);
+            //builder.HasMany(e => e.AttendanceRecords)
+            //       .WithOne(ar => ar.Employee)
+            //       .HasForeignKey(ar => ar.EmployeeId)
+            //       .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(e => e.Deductions)
-                   .WithOne(d => d.Employee)
-                   .HasForeignKey(d => d.EmployeeId)
-                   .OnDelete(DeleteBehavior.Restrict);
+            //builder.HasMany(e => e.Deductions)
+            //       .WithOne(d => d.Employee)
+            //       .HasForeignKey(d => d.EmployeeId)
+            //       .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(e => e.SalaryStructures)
                    .WithOne(ss => ss.Employee)

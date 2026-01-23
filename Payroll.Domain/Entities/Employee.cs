@@ -14,7 +14,7 @@ public class Employee
     public DateTime CreatedAt { get; set; }
     public virtual ICollection<Payslip> Payslips { get; set; } = new List<Payslip>();
     public virtual ICollection<SalaryStructure> SalaryStructures { get; set; } = new List<SalaryStructure>();
-    public virtual ICollection<Deduction> Deductions { get; set; } = new List<Deduction>();
-    public virtual ICollection<AttendanceRecord> AttendanceRecords { get; set; } = new List<AttendanceRecord>();
+    //public virtual ICollection<Deduction> Deductions { get; set; } = new List<Deduction>();
+    //public virtual ICollection<AttendanceRecord> AttendanceRecords { get; set; } = new List<AttendanceRecord>();
     public virtual ICollection<PayrollEntry> PayrollEntries { get; set; } = new HashSet<PayrollEntry>(); 
 }

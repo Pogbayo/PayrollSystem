@@ -14,8 +14,8 @@ namespace Payroll.Infrastructure.Configurations
             builder.Property(pe => pe.EmployeeId).IsRequired();
             builder.Property(pe => pe.PayrollRunId).IsRequired();
             builder.Property(pe => pe.GrossPay).HasColumnType("decimal(18,2)").IsRequired();
-            builder.Property(pe => pe.TotalDeductions).HasColumnType("decimal(18,2)").IsRequired();
-            builder.Property(pe => pe.NetPay).HasColumnType("decimal(18,2)").IsRequired();
+            //builder.Property(pe => pe.TotalDeductions).HasColumnType("decimal(18,2)").IsRequired();
+            //builder.Property(pe => pe.NetPay).HasColumnType("decimal(18,2)").IsRequired();
 
             //Relationships
             builder.HasOne(pe => pe.PayrollRun)

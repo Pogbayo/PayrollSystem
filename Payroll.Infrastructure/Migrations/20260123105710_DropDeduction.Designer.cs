@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Payroll.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Payroll.Infrastructure.Data;
 namespace Payroll.Infrastructure.Migrations
 {
     [DbContext(typeof(PayrollDbContext))]
-    partial class PayrollDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260123105710_DropDeduction")]
+    partial class DropDeduction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,69 @@ namespace Payroll.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AttendanceRecord", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("HoursWorked")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<decimal>("OvertimeHours")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(5,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<DateTime>("WorkDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("AttendanceRecords");
+                });
+
+            modelBuilder.Entity("Deduction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Loan")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("Pension")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("Tax")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Deductions");
+                });
 
             modelBuilder.Entity("Employee", b =>
                 {
@@ -86,8 +152,14 @@ namespace Payroll.Infrastructure.Migrations
                     b.Property<decimal>("GrossPay")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("NetPay")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<Guid>("PayrollRunId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("TotalDeductions")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -190,6 +262,28 @@ namespace Payroll.Infrastructure.Migrations
                     b.ToTable("SalaryStructures");
                 });
 
+            modelBuilder.Entity("AttendanceRecord", b =>
+                {
+                    b.HasOne("Employee", "Employee")
+                        .WithMany("AttendanceRecords")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("Deduction", b =>
+                {
+                    b.HasOne("Employee", "Employee")
+                        .WithMany("Deductions")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("PayrollEntry", b =>
                 {
                     b.HasOne("Employee", "Employee")
@@ -241,6 +335,10 @@ namespace Payroll.Infrastructure.Migrations
 
             modelBuilder.Entity("Employee", b =>
                 {
+                    b.Navigation("AttendanceRecords");
+
+                    b.Navigation("Deductions");
+
                     b.Navigation("PayrollEntries");
 
                     b.Navigation("Payslips");
