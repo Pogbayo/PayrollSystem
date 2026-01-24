@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace Payroll.Application.Dtos.EmployeeDto
+namespace Payroll.Application.Dtos.Employee
 {
     public class EmployeeDto
     {

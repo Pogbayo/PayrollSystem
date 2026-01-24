@@ -1,23 +1,35 @@
+using Microsoft.EntityFrameworkCore;
 using Payroll.Application.Interfaces.IRepository;
-using Payroll.Application.Interfaces.IService;
+using Payroll.Infrastructure.Data;
 
 namespace Payroll.Infrastructure.Repositories
 {
     public class SalaryStructureRepository : ISalaryStructureRepository
     {
-        public Task AddAsync(SalaryStructure entity)
+        private readonly PayrollDbContext _context;
+
+        public SalaryStructureRepository(PayrollDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<IEnumerable<SalaryStructure>> GetByEmployeeIdAsync(Guid employeeId)
+        public async Task AddAsync(SalaryStructure entity)
         {
-            throw new NotImplementedException();
+            await _context.SalaryStructures.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<SalaryStructure?> GetByIdAsync(Guid id)
+        public async Task<IEnumerable<SalaryStructure>> GetByEmployeeIdAsync(Guid employeeId)
         {
-            throw new NotImplementedException();
+            return await _context.SalaryStructures
+                .Where(s => s.EmployeeId == employeeId)
+                .ToListAsync();
+        }
+
+        public async Task<SalaryStructure?> GetByIdAsync(Guid id)
+        {
+            return await _context.SalaryStructures
+                .FirstOrDefaultAsync(s => s.Id == id);
         }
     }
 }

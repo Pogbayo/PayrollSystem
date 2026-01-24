@@ -10,5 +10,5 @@ public class PayrollRun
     public Status Status { get; set; } 
 
     public DateTime ProcessedAt { get; set; }
-    public virtual ICollection<PayrollEntry> PayrollEntries { get; set; } = new HashSet<PayrollEntry>();
+    public ICollection<PayrollEntry> PayrollEntries { get; set; } = new HashSet<PayrollEntry>();
 }

@@ -1,4 +1,4 @@
-﻿namespace Payroll.Application.Dtos.EmployeeDto
+﻿namespace Payroll.Application.Dtos.Employee
 {
     public class CreateEmployeeDto
     {
