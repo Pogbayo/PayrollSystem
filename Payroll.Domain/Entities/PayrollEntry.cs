@@ -1,3 +1,5 @@
+using Payroll.Domain.Enums;
+
 public class PayrollEntry
 {
     public Guid Id { get; set; }
@@ -9,6 +11,7 @@ public class PayrollEntry
     public Employee? Employee { get; set; }
     public DateTime CreatedAt { get; set; }
     public decimal GrossPay { get; set; } //money gotten from extra hours of work
+    public PayrollEntryStatus Status { get; set; }
 
     //public decimal TotalDeductions { get; set; } //like taxes, damages or pension deducted from your gross pay
     //public decimal NetPay { get; set; } // how much is left all the calculations

@@ -1,11 +1,6 @@
 ﻿using MediatR;
 using Payroll.Application.Common;
-using Payroll.Application.Dtos.EmployeeDto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Payroll.Application.Dtos.Employee;
 
 namespace Payroll.Application.Queries.Employees.GetEmployeeById
 {

@@ -1,19 +1,19 @@
+using Amazon.SimpleEmail;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Payroll.Infrastructure.Data;
-
+using Microsoft.Extensions.Options;
+using Payroll.Application.Common;
+using Payroll.Application.Extensions;
+using Payroll.Application.Interfaces.IService;
+using Payroll.Infrastructure.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-
-builder.Services.AddDbContext<PayrollDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-        sqlOptions => sqlOptions.CommandTimeout(60)));
-
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication(builder.Configuration);
 
 var app = builder.Build();
 

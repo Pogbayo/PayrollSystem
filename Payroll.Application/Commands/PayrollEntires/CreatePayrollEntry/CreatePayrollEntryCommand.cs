@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Payroll.Application.Common;
-using Payroll.Application.Dtos.PayrollEntryDto;
+using Payroll.Application.Dtos.PayrollEntry;
 
 namespace Payroll.Application.Commands.PayrollEntires.CreatePayrollEntry
 {

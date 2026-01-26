@@ -4,6 +4,7 @@
     {
         Pending,
         Processing,
+        PartiallyCompleted,
         Completed,
         Failed
     }

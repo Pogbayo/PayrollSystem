@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Payroll.Application.Common;
-using Payroll.Application.Dtos.EmployeeDto;
+using Payroll.Application.Dtos.Employee;
 using Payroll.Application.Interfaces.IRepository;
 
 
